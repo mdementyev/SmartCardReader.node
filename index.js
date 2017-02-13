@@ -77,6 +77,10 @@ module.exports = function (device) {
     if (smc.lastRead === res.data)
       return flooding(res.data);
 
+    if (res.data.length === 0) {
+      smc.emit('card-removed');
+    }
+
     smc.lastRead = res.data;
     dispatch(res.data);
     setImmediate(poll);
